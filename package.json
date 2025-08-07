@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "env-cmd keystone dev",
-    "start": "keystone start",
+    "start": "keystone start --with-migrations",
     "build": "keystone build",
-    "docker": "docker-compose up -d"
+    "docker": "docker-compose up -d",
+    "migrate": "env-cmd keystone prisma migrate dev"
   },
   "dependencies": {
     "@keystone-6/auth": "^8.0.0",

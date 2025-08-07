@@ -127,6 +127,223 @@ input UserCreateInput {
   createdAt: DateTime
 }
 
+type Server {
+  id: ID!
+  title: String
+  slug: String
+  isOfficial: Boolean
+  description: String
+  overview: String
+  icon: CloudinaryImage_File
+  category: ServerCategory
+  homepage: String
+  githubUrl: String
+  githubOwner: String
+  githubLicense: String
+  githubLanguage: String
+  githubPublishedAt: DateTime
+  tools: JSON
+  settings: JSON
+  createdAt: DateTime
+}
+
+type CloudinaryImage_File {
+  id: ID
+  filename: String
+  originalFilename: String
+  mimetype: String
+  encoding: String
+  publicUrl: String
+  publicUrlTransformed(transformation: CloudinaryImageFormat): String
+}
+
+"""
+Mirrors the formatting options [Cloudinary provides](https://cloudinary.com/documentation/image_transformation_reference).
+All options are strings as they ultimately end up in a URL.
+"""
+input CloudinaryImageFormat {
+  """ Rewrites the filename to be this pretty string. Do not include `/` or `.`
+  """
+  prettyName: String
+  width: String
+  height: String
+  crop: String
+  aspect_ratio: String
+  gravity: String
+  zoom: String
+  x: String
+  y: String
+  format: String
+  fetch_format: String
+  quality: String
+  radius: String
+  angle: String
+  effect: String
+  opacity: String
+  border: String
+  background: String
+  overlay: String
+  underlay: String
+  default_image: String
+  delay: String
+  color: String
+  color_space: String
+  dpr: String
+  page: String
+  density: String
+  flags: String
+  transformation: String
+}
+
+input ServerWhereUniqueInput {
+  id: ID
+  slug: String
+  githubUrl: String
+}
+
+input ServerWhereInput {
+  AND: [ServerWhereInput!]
+  OR: [ServerWhereInput!]
+  NOT: [ServerWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  slug: StringFilter
+  isOfficial: BooleanFilter
+  description: StringFilter
+  overview: StringFilter
+  category: ServerCategoryWhereInput
+  homepage: StringFilter
+  githubUrl: StringFilter
+  githubOwner: StringFilter
+  githubLicense: StringFilter
+  githubLanguage: StringFilter
+  githubPublishedAt: DateTimeNullableFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ServerOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  slug: OrderDirection
+  isOfficial: OrderDirection
+  description: OrderDirection
+  overview: OrderDirection
+  homepage: OrderDirection
+  githubUrl: OrderDirection
+  githubOwner: OrderDirection
+  githubLicense: OrderDirection
+  githubLanguage: OrderDirection
+  githubPublishedAt: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ServerUpdateInput {
+  title: String
+  slug: String
+  isOfficial: Boolean
+  description: String
+  overview: String
+  icon: Upload
+  category: ServerCategoryRelateToOneForUpdateInput
+  homepage: String
+  githubUrl: String
+  githubOwner: String
+  githubLicense: String
+  githubLanguage: String
+  githubPublishedAt: DateTime
+  tools: JSON
+  settings: JSON
+  createdAt: DateTime
+}
+
+"""The `Upload` scalar type represents a file upload."""
+scalar Upload
+
+input ServerCategoryRelateToOneForUpdateInput {
+  create: ServerCategoryCreateInput
+  connect: ServerCategoryWhereUniqueInput
+  disconnect: Boolean
+}
+
+input ServerUpdateArgs {
+  where: ServerWhereUniqueInput!
+  data: ServerUpdateInput!
+}
+
+input ServerCreateInput {
+  title: String
+  slug: String
+  isOfficial: Boolean
+  description: String
+  overview: String
+  icon: Upload
+  category: ServerCategoryRelateToOneForCreateInput
+  homepage: String
+  githubUrl: String
+  githubOwner: String
+  githubLicense: String
+  githubLanguage: String
+  githubPublishedAt: DateTime
+  tools: JSON
+  settings: JSON
+  createdAt: DateTime
+}
+
+input ServerCategoryRelateToOneForCreateInput {
+  create: ServerCategoryCreateInput
+  connect: ServerCategoryWhereUniqueInput
+}
+
+type ServerCategory {
+  id: ID!
+  title: String
+  slug: String
+  icon: CloudinaryImage_File
+  createdAt: DateTime
+}
+
+input ServerCategoryWhereUniqueInput {
+  id: ID
+  title: String
+  slug: String
+}
+
+input ServerCategoryWhereInput {
+  AND: [ServerCategoryWhereInput!]
+  OR: [ServerCategoryWhereInput!]
+  NOT: [ServerCategoryWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  slug: StringFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input ServerCategoryOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  slug: OrderDirection
+  createdAt: OrderDirection
+}
+
+input ServerCategoryUpdateInput {
+  title: String
+  slug: String
+  icon: Upload
+  createdAt: DateTime
+}
+
+input ServerCategoryUpdateArgs {
+  where: ServerCategoryWhereUniqueInput!
+  data: ServerCategoryUpdateInput!
+}
+
+input ServerCategoryCreateInput {
+  title: String
+  slug: String
+  icon: Upload
+  createdAt: DateTime
+}
+
 """
 The `JSON` scalar type represents JSON values as specified by [ECMA-404](http://www.ecma-international.org/publications/files/ECMA-ST/ECMA-404.pdf).
 """
@@ -139,6 +356,18 @@ type Mutation {
   updateUsers(data: [UserUpdateArgs!]!): [User]
   deleteUser(where: UserWhereUniqueInput!): User
   deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createServer(data: ServerCreateInput!): Server
+  createServers(data: [ServerCreateInput!]!): [Server]
+  updateServer(where: ServerWhereUniqueInput!, data: ServerUpdateInput!): Server
+  updateServers(data: [ServerUpdateArgs!]!): [Server]
+  deleteServer(where: ServerWhereUniqueInput!): Server
+  deleteServers(where: [ServerWhereUniqueInput!]!): [Server]
+  createServerCategory(data: ServerCategoryCreateInput!): ServerCategory
+  createServerCategories(data: [ServerCategoryCreateInput!]!): [ServerCategory]
+  updateServerCategory(where: ServerCategoryWhereUniqueInput!, data: ServerCategoryUpdateInput!): ServerCategory
+  updateServerCategories(data: [ServerCategoryUpdateArgs!]!): [ServerCategory]
+  deleteServerCategory(where: ServerCategoryWhereUniqueInput!): ServerCategory
+  deleteServerCategories(where: [ServerCategoryWhereUniqueInput!]!): [ServerCategory]
   endSession: Boolean!
   authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
   createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
@@ -165,6 +394,12 @@ type Query {
   user(where: UserWhereUniqueInput!): User
   users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
   usersCount(where: UserWhereInput! = {}): Int
+  server(where: ServerWhereUniqueInput!): Server
+  servers(where: ServerWhereInput! = {}, orderBy: [ServerOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServerWhereUniqueInput): [Server!]
+  serversCount(where: ServerWhereInput! = {}): Int
+  serverCategory(where: ServerCategoryWhereUniqueInput!): ServerCategory
+  serverCategories(where: ServerCategoryWhereInput! = {}, orderBy: [ServerCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServerCategoryWhereUniqueInput): [ServerCategory!]
+  serverCategoriesCount(where: ServerCategoryWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }

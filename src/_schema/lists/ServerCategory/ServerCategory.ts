@@ -3,46 +3,30 @@ import { Lists } from ".keystone/types";
 import { list } from "@keystone-6/core";
 import { text, timestamp } from "@keystone-6/core/fields";
 import { allowAll } from "@keystone-6/core/access";
+import { cloudinaryImage } from "@keystone-6/cloudinary";
 import { Session } from "../lists.types";
 
-export const Inquiry = list<Lists.Inquiry.TypeInfo<Session>>({
+export const ServerCategory = list<Lists.ServerCategory.TypeInfo<Session>>({
   access: allowAll,
-  ui: {
-    hideCreate: true,
-    isHidden: ({ session }) => {
-      return !session?.data?.isAdmin;
-    },
-  },
   fields: {
-    email: text({
-      ui: {
-        itemView: {
-          fieldMode: "read",
-        },
-      },
+    title: text({
+      isIndexed: "unique",
       validation: {
         isRequired: true,
       },
     }),
-    subject: text({
-      ui: {
-        itemView: {
-          fieldMode: "read",
-        },
-      },
+    slug: text({
+      isIndexed: "unique",
       validation: {
         isRequired: true,
       },
     }),
-    message: text({
-      ui: {
-        displayMode: "textarea",
-        itemView: {
-          fieldMode: "read",
-        },
-      },
-      validation: {
-        isRequired: true,
+    icon: cloudinaryImage({
+      cloudinary: {
+        cloudName: process.env.CLOUDINARY_CLOUD_NAME,
+        apiKey: process.env.CLOUDINARY_API_KEY,
+        apiSecret: process.env.CLOUDINARY_API_SECRET,
+        folder: `${process.env.CLOUDINARY_FOLDER_ROOT}/server-categories`,
       },
     }),
     createdAt: timestamp({

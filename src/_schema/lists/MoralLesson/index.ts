@@ -1,1 +1,0 @@
-export { MoralLesson } from "./MoralLesson";

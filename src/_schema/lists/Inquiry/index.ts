@@ -1,1 +1,0 @@
-export { Inquiry } from "./Inquiry";

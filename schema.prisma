@@ -19,3 +19,35 @@ model User {
   isAdmin   Boolean   @default(true)
   createdAt DateTime? @default(now())
 }
+
+model Server {
+  id                String          @id @default(cuid())
+  title             String          @default("")
+  slug              String          @unique @default("")
+  isOfficial        Boolean         @default(false)
+  description       String          @default("")
+  overview          String          @default("")
+  icon              Json?
+  category          ServerCategory? @relation("Server_category", fields: [categoryId], references: [id])
+  categoryId        String?         @map("category")
+  homepage          String          @default("")
+  githubUrl         String          @unique @default("")
+  githubOwner       String          @default("")
+  githubLicense     String          @default("")
+  githubLanguage    String          @default("")
+  githubPublishedAt DateTime?       @default(now())
+  tools             Json?           @default("{}")
+  settings          Json?           @default("{}")
+  createdAt         DateTime?       @default(now())
+
+  @@index([categoryId])
+}
+
+model ServerCategory {
+  id                   String    @id @default(cuid())
+  title                String    @unique @default("")
+  slug                 String    @unique @default("")
+  icon                 Json?
+  createdAt            DateTime? @default(now())
+  from_Server_category Server[]  @relation("Server_category")
+}
