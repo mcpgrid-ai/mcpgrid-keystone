@@ -16,8 +16,9 @@ RUN yarn install --frozen-lockfile
 # Copy source code
 COPY env.d.ts ./
 COPY tsconfig*.json ./
-COPY nest-cli.json ./
+COPY keystone.ts ./
 COPY src ./src
+COPY schema.prisma ./
 
 # Build the application
 RUN yarn build
