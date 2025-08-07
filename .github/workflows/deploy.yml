@@ -4,63 +4,56 @@ on:
   push:
     branches: main
   workflow_dispatch:
-    inputs:
-      environment:
-        type: environment
+
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
-    environment: ${{ github.event.inputs.environment || 'development' }}
-
+    name: Deploy
     permissions:
       contents: read
       id-token: write
+    runs-on: ubuntu-latest
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Setup NodeJS
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18
-          cache: "yarn"
-
-      - name: Install dependencies
-        run: yarn
-
-      - name: Build application
-        run: yarn build
-
-      - name: Auth to Google Cloud
+      - name: Google Auth
         uses: google-github-actions/auth@v2
         with:
-          credentials_json: ${{ secrets.GCP_CREDENTIALS_JSON }}
+          credentials_json: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-      - name: Deploy to Google Cloud App Engine
-        uses: google-github-actions/deploy-appengine@v2
+      - name: Docker Auth
+        uses: docker/login-action@v3
         with:
-          deliverables: ${{ vars.CGP_APP_ENGINE_DELIVERABLES }}
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          env_vars: |-
-            APP_ENVIRONMENT=${{ vars.APP_ENVIRONMENT }}
-            CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
-            CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
-            CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
-            CLOUDINARY_FOLDER_ROOT=${{ vars.CLOUDINARY_FOLDER_ROOT }}
-            DATABASE_URL=${{ secrets.DATABASE_URL }}
-            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
-            SENTRY_DNS=${{ secrets.SENTRY_DNS }}
-            SESSION_SECRET=${{ secrets.SESSION_SECRET }}
-            AWS_S3_BUCKET_NAME=${{ vars.AWS_S3_BUCKET_NAME }}
-            AWS_S3_BUCKET_REGION=${{ vars.AWS_S3_BUCKET_REGION }}
-            AWS_S3_ACCESS_KEY=${{ secrets.AWS_S3_ACCESS_KEY }}
-            AWS_S3_ACCESS_KEY_SECRET=${{ secrets.AWS_S3_ACCESS_KEY_SECRET }}
+          registry: ${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev
+          username: _json_key
+          password: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
-      - name: Remove Cloud App Engine versions
-        uses: Reviewable/appengine-remove-action@v2.1.2
+      - name: Build and Push Container
+        run: |-
+          docker build -t "${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}" ./
+          docker push "${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}"
+
+      - name: Deploy to Cloud Run
+        id: deploy
+        uses: google-github-actions/deploy-cloudrun@v2
         with:
-          limit: 1
-          project_id: ${{ secrets.GCP_PROJECT_ID }}
-          credentials: ${{ secrets.GCP_CREDENTIALS_JSON }}
+          service: ${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}
+          region: ${{ vars.GCP_REGION }}
+          image: ${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}
+          flags: |
+            --port=8080
+            --timeout=300
+            --allow-unauthenticated
+          secrets: |
+            MEILISEARCH_API_KEY=MEILISEARCH_API_KEY:latest
+            MEILISEARCH_HOST=MEILISEARCH_HOST:latest
+          env_vars: |
+            CORS_ORIGIN_WHITELIST=${{ vars.CORS_ORIGIN_WHITELIST }}
+            
+
+      - name: Show Output
+        run: echo ${{ steps.deploy.outputs.url }}
+
+      
