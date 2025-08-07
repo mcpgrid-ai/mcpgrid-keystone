@@ -18,7 +18,9 @@ COPY env.d.ts ./
 COPY tsconfig*.json ./
 COPY keystone.ts ./
 COPY src ./src
+COPY migrations ./migrations
 COPY schema.prisma ./
+COPY schema.graphql ./
 
 # Build the application
 RUN yarn build
@@ -41,9 +43,12 @@ RUN groupadd --gid 1001 --system nodejs && \
     useradd --uid 1001 --system --gid nodejs --shell /bin/bash --create-home nestjs
 
 # Copy built application and production dependencies from builder stage
-COPY --from=builder --chown=nestjs:nodejs /usr/src/app/dist ./dist
+COPY --from=builder --chown=nestjs:nodejs /usr/src/app/.keystone ./.keystone
 COPY --from=builder --chown=nestjs:nodejs /usr/src/app/node_modules ./node_modules
 COPY --from=builder --chown=nestjs:nodejs /usr/src/app/package.json ./package.json
+COPY --from=builder --chown=nestjs:nodejs /usr/src/app/migrations ./migrations
+COPY --from=builder --chown=nestjs:nodejs /usr/src/app/schema.prisma ./schema.prisma
+COPY --from=builder --chown=nestjs:nodejs /usr/src/app/schema.graphql ./schema.graphql
 
 # Switch to non-root user
 USER nestjs
