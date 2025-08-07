@@ -54,4 +54,4 @@ EXPOSE 8080
 ENTRYPOINT ["dumb-init", "--"]
 
 # Start the application
-CMD ["node", "dist/main.js"]
+CMD ["yarn", "start"]
