@@ -1,0 +1,66 @@
+name: Deploy
+
+on:
+  push:
+    branches: main
+  workflow_dispatch:
+    inputs:
+      environment:
+        type: environment
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: ${{ github.event.inputs.environment || 'development' }}
+
+    permissions:
+      contents: read
+      id-token: write
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup NodeJS
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: "yarn"
+
+      - name: Install dependencies
+        run: yarn
+
+      - name: Build application
+        run: yarn build
+
+      - name: Auth to Google Cloud
+        uses: google-github-actions/auth@v2
+        with:
+          credentials_json: ${{ secrets.GCP_CREDENTIALS_JSON }}
+
+      - name: Deploy to Google Cloud App Engine
+        uses: google-github-actions/deploy-appengine@v2
+        with:
+          deliverables: ${{ vars.CGP_APP_ENGINE_DELIVERABLES }}
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          env_vars: |-
+            APP_ENVIRONMENT=${{ vars.APP_ENVIRONMENT }}
+            CLOUDINARY_API_KEY=${{ secrets.CLOUDINARY_API_KEY }}
+            CLOUDINARY_API_SECRET=${{ secrets.CLOUDINARY_API_SECRET }}
+            CLOUDINARY_CLOUD_NAME=${{ secrets.CLOUDINARY_CLOUD_NAME }}
+            CLOUDINARY_FOLDER_ROOT=${{ vars.CLOUDINARY_FOLDER_ROOT }}
+            DATABASE_URL=${{ secrets.DATABASE_URL }}
+            OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}
+            SENTRY_DNS=${{ secrets.SENTRY_DNS }}
+            SESSION_SECRET=${{ secrets.SESSION_SECRET }}
+            AWS_S3_BUCKET_NAME=${{ vars.AWS_S3_BUCKET_NAME }}
+            AWS_S3_BUCKET_REGION=${{ vars.AWS_S3_BUCKET_REGION }}
+            AWS_S3_ACCESS_KEY=${{ secrets.AWS_S3_ACCESS_KEY }}
+            AWS_S3_ACCESS_KEY_SECRET=${{ secrets.AWS_S3_ACCESS_KEY_SECRET }}
+
+      - name: Remove Cloud App Engine versions
+        uses: Reviewable/appengine-remove-action@v2.1.2
+        with:
+          limit: 1
+          project_id: ${{ secrets.GCP_PROJECT_ID }}
+          credentials: ${{ secrets.GCP_CREDENTIALS_JSON }}
