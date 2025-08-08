@@ -1,5 +1,5 @@
 # Multi-stage build with Debian base
-FROM node:18-slim AS builder
+FROM node:20-slim AS builder
 
 # Set working directory
 WORKDIR /usr/src/app
@@ -36,8 +36,10 @@ RUN yarn install --frozen-lockfile --production && yarn cache clean
 FROM node:20-slim AS production
 
 # Install dumb-init for proper signal handling
-RUN apt-get update && apt-get install -y --no-install-recommends dumb-init && \
-    apt-get clean && rm -rf /var/lib/apt/lists/*
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    dumb-init \
+    openssl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
 WORKDIR /usr/src/app
