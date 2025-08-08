@@ -48,6 +48,7 @@ model ServerCategory {
   title                String    @unique @default("")
   slug                 String    @unique @default("")
   icon                 Json?
+  isDefault            Boolean   @default(false)
   createdAt            DateTime? @default(now())
   from_Server_category Server[]  @relation("Server_category")
 }

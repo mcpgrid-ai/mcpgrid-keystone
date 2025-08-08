@@ -11,6 +11,7 @@ env:
   GCP_GAR_LOCATION: us-central1
   GCP_PROJECT_ID: mcp-box
   GCP_REGION: us-central1
+  CLOUDINARY_FOLDER_ROOT: mcpbox
   DOCKER_IMAGE: ''
 
 
@@ -68,6 +69,9 @@ jobs:
             MEILISEARCH_API_KEY=MEILISEARCH_API_KEY:latest
             MEILISEARCH_HOST=MEILISEARCH_HOST:latest
             DATABASE_URL=KEYSTONE_DATABASE_URL:latest
+            SESSION_SECRET=KEYSTONE_SESSION_SECRET:latest
+          env_vars: |
+            CLOUDINARY_FOLDER_ROOT=${{ env.CLOUDINARY_FOLDER_ROOT }}
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}

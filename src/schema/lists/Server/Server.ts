@@ -25,6 +25,11 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
       validation: {
         isRequired: true,
       },
+      ui: {
+        itemView: {
+          fieldMode: "read",
+        },
+      },
     }),
     isOfficial: checkbox(),
     description: text({

@@ -299,6 +299,7 @@ type ServerCategory {
   title: String
   slug: String
   icon: CloudinaryImage_File
+  isDefault: Boolean
   createdAt: DateTime
 }
 
@@ -315,6 +316,7 @@ input ServerCategoryWhereInput {
   id: IDFilter
   title: StringFilter
   slug: StringFilter
+  isDefault: BooleanFilter
   createdAt: DateTimeNullableFilter
 }
 
@@ -322,6 +324,7 @@ input ServerCategoryOrderByInput {
   id: OrderDirection
   title: OrderDirection
   slug: OrderDirection
+  isDefault: OrderDirection
   createdAt: OrderDirection
 }
 
@@ -329,6 +332,7 @@ input ServerCategoryUpdateInput {
   title: String
   slug: String
   icon: Upload
+  isDefault: Boolean
   createdAt: DateTime
 }
 
@@ -341,6 +345,7 @@ input ServerCategoryCreateInput {
   title: String
   slug: String
   icon: Upload
+  isDefault: Boolean
   createdAt: DateTime
 }
 

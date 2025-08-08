@@ -7,7 +7,7 @@
     "start": "keystone start --with-migrations",
     "build": "keystone build",
     "docker": "docker-compose up -d",
-    "migrate": "env-cmd keystone prisma migrate dev",
+    "migrate": "env-cmd keystone prisma migrate dev --create-only",
     "lint": "eslint src --max-warnings=0",
     "act": "act -j build --secret-file .env --env-file .env --var-file .env --container-architecture linux/amd64"
   },

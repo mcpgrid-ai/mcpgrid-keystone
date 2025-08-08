@@ -1,7 +1,7 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Lists } from ".keystone/types";
 import { list } from "@keystone-6/core";
-import { text, timestamp } from "@keystone-6/core/fields";
+import { checkbox, text, timestamp } from "@keystone-6/core/fields";
 import { allowAll } from "@keystone-6/core/access";
 import { cloudinaryImage } from "@keystone-6/cloudinary";
 import { Session } from "../lists.types";
@@ -20,6 +20,11 @@ export const ServerCategory = list<Lists.ServerCategory.TypeInfo<Session>>({
       validation: {
         isRequired: true,
       },
+      ui: {
+        itemView: {
+          fieldMode: "read",
+        },
+      },
     }),
     icon: cloudinaryImage({
       cloudinary: {
@@ -29,8 +34,12 @@ export const ServerCategory = list<Lists.ServerCategory.TypeInfo<Session>>({
         folder: `${process.env.CLOUDINARY_FOLDER_ROOT}/server-categories`,
       },
     }),
+    isDefault: checkbox(),
     createdAt: timestamp({
       ui: {
+        createView: {
+          fieldMode: "hidden",
+        },
         itemView: {
           fieldMode: "read",
         },
