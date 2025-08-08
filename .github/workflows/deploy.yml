@@ -5,6 +5,14 @@ on:
     branches: main
   workflow_dispatch:
 
+env:
+  GCP_SQL_CONNECTION_NAME: mcp-box:us-central1:mcp-box
+  GCP_CLOUD_RUN_SERVICE_NAME: mcpbox-keystone
+  GCP_GAR_LOCATION: us-central1
+  GCP_PROJECT_ID: mcp-box
+  GCP_REGION: us-central1
+  DOCKER_IMAGE: ''
+
 
 jobs:
   deploy:
@@ -18,6 +26,15 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Setup environment variables
+        run: |
+          echo "DOCKER_IMAGE=${{ env.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}" >> $GITHUB_ENV
+
+      - name: Confirm environment variables
+        run: |
+          echo ${{env.DOCKER_IMAGE}}
+
+
       - name: Google Auth
         uses: google-github-actions/auth@v2
         with:
@@ -26,34 +43,36 @@ jobs:
       - name: Docker Auth
         uses: docker/login-action@v3
         with:
-          registry: ${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev
+          registry: $GCP_GAR_LOCATION-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
       - name: Build and Push Container
         run: |-
-          docker build -t "${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}" ./
-          docker push "${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}"
+          docker build -t "${{ env.DOCKER_IMAGE }}" ./
+          docker push "${{ env.DOCKER_IMAGE }}"
 
       - name: Deploy to Cloud Run
         id: deploy
         uses: google-github-actions/deploy-cloudrun@v2
         with:
-          service: ${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}
-          region: ${{ vars.GCP_REGION }}
-          image: ${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ vars.GCP_PROJECT_ID }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ vars.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}
+          service: ${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}
+          region: ${{ env.GCP_REGION }}
+          image: ${{ env.DOCKER_IMAGE }}
           flags: |
             --port=8080
             --timeout=300
             --allow-unauthenticated
+            --add-cloudsql-instances=${{ env.GCP_SQL_CONNECTION_NAME }}
           secrets: |
             MEILISEARCH_API_KEY=MEILISEARCH_API_KEY:latest
             MEILISEARCH_HOST=MEILISEARCH_HOST:latest
-          env_vars: |
-            CORS_ORIGIN_WHITELIST=${{ vars.CORS_ORIGIN_WHITELIST }}
-            
+            DATABASE_URL=KEYSTONE_DATABASE_URL:latest
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
+
+      - name: Start service
+        run: curl ${{ steps.deploy.outputs.url }}
 
       

@@ -10,7 +10,7 @@ export default withAuth(
     },
     server: {
       extendExpressApp: (app) => {
-        app.get("/api/health-check", (_, res) => {
+        app.get("/health", (_, res) => {
           res.status(200).send("Ok");
         });
       },
