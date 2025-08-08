@@ -28,9 +28,6 @@ COPY schema.graphql ./
 # Build the application
 RUN yarn build
 
-# Remove dev dependencies
-RUN yarn install --frozen-lockfile --production && yarn cache clean
-
 # Production stage
 FROM node:20-slim AS production
 
