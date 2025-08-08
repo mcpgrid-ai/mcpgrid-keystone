@@ -1,9 +1,6 @@
 # Multi-stage build with Debian base
 FROM node:20-slim AS builder
 
-# Install OpenSSL
-RUN apt-get update -y && apt-get install -y openssl
-
 # Set working directory
 WORKDIR /usr/src/app
 
@@ -12,6 +9,9 @@ RUN corepack enable
 
 # Copy package files
 COPY package.json yarn.lock ./
+
+# Install OpenSSL
+RUN apt-get update -y && apt-get install -y openssl
 
 # Install dependencies
 RUN yarn install --frozen-lockfile
