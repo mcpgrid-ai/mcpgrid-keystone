@@ -4,6 +4,10 @@ FROM node:18-slim AS builder
 # Set working directory
 WORKDIR /usr/src/app
 
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    openssl \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
 # Enable Corepack to use Yarn
 RUN corepack enable
 
