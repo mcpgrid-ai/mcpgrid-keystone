@@ -11,7 +11,6 @@ env:
   GCP_GAR_LOCATION: us-central1
   GCP_PROJECT_ID: mcp-box
   GCP_REGION: us-central1
-  GCP_CLOUD_RUN_SERVICE_ACCOUNT: mcp-box-github-actions@mcp-box.iam.gserviceaccount.com
   DOCKER_IMAGE: ''
 
 
@@ -65,7 +64,6 @@ jobs:
             --timeout=300
             --allow-unauthenticated
             --add-cloudsql-instances=${{ env.GCP_SQL_CONNECTION_NAME }}
-            --service-account=${{ env.GCP_CLOUD_RUN_SERVICE_ACCOUNT }}
           secrets: |
             MEILISEARCH_API_KEY=MEILISEARCH_API_KEY:latest
             MEILISEARCH_HOST=MEILISEARCH_HOST:latest
