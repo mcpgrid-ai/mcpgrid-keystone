@@ -1,6 +1,9 @@
 # Multi-stage build with Debian base
 FROM node:20-slim AS builder
 
+# Install OpenSSL
+RUN apt-get update -y && apt-get install -y openssl
+
 # Set working directory
 WORKDIR /usr/src/app
 
