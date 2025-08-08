@@ -112,5 +112,18 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
         kind: "now",
       },
     }),
+    updatedAt: timestamp({
+      ui: {
+        createView: {
+          fieldMode: "hidden",
+        },
+        itemView: {
+          fieldMode: "read",
+        },
+      },
+      defaultValue: {
+        kind: "now",
+      },
+    }),
   },
 });

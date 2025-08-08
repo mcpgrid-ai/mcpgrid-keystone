@@ -39,6 +39,7 @@ model Server {
   tools             Json?           @default("{}")
   settings          Json?           @default("{}")
   createdAt         DateTime?       @default(now())
+  updatedAt         DateTime?       @default(now())
 
   @@index([categoryId])
 }
@@ -50,5 +51,6 @@ model ServerCategory {
   icon                 Json?
   isDefault            Boolean   @default(false)
   createdAt            DateTime? @default(now())
+  updatedAt            DateTime? @default(now())
   from_Server_category Server[]  @relation("Server_category")
 }

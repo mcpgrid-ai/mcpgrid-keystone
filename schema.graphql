@@ -145,6 +145,7 @@ type Server {
   tools: JSON
   settings: JSON
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
 type CloudinaryImage_File {
@@ -219,6 +220,7 @@ input ServerWhereInput {
   githubLanguage: StringFilter
   githubPublishedAt: DateTimeNullableFilter
   createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
 }
 
 input ServerOrderByInput {
@@ -235,6 +237,7 @@ input ServerOrderByInput {
   githubLanguage: OrderDirection
   githubPublishedAt: OrderDirection
   createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
 input ServerUpdateInput {
@@ -254,6 +257,7 @@ input ServerUpdateInput {
   tools: JSON
   settings: JSON
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """The `Upload` scalar type represents a file upload."""
@@ -287,6 +291,7 @@ input ServerCreateInput {
   tools: JSON
   settings: JSON
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ServerCategoryRelateToOneForCreateInput {
@@ -301,6 +306,7 @@ type ServerCategory {
   icon: CloudinaryImage_File
   isDefault: Boolean
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ServerCategoryWhereUniqueInput {
@@ -318,6 +324,7 @@ input ServerCategoryWhereInput {
   slug: StringFilter
   isDefault: BooleanFilter
   createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
 }
 
 input ServerCategoryOrderByInput {
@@ -326,6 +333,7 @@ input ServerCategoryOrderByInput {
   slug: OrderDirection
   isDefault: OrderDirection
   createdAt: OrderDirection
+  updatedAt: OrderDirection
 }
 
 input ServerCategoryUpdateInput {
@@ -334,6 +342,7 @@ input ServerCategoryUpdateInput {
   icon: Upload
   isDefault: Boolean
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
 input ServerCategoryUpdateArgs {
@@ -347,6 +356,7 @@ input ServerCategoryCreateInput {
   icon: Upload
   isDefault: Boolean
   createdAt: DateTime
+  updatedAt: DateTime
 }
 
 """

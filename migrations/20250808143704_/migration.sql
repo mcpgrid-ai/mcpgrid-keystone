@@ -1,0 +1,5 @@
+-- AlterTable
+ALTER TABLE "Server" ADD COLUMN     "updatedAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP;
+
+-- AlterTable
+ALTER TABLE "ServerCategory" ADD COLUMN     "updatedAt" TIMESTAMP(3) DEFAULT CURRENT_TIMESTAMP;
