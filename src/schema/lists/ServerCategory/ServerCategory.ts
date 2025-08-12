@@ -8,6 +8,11 @@ import { Session } from "../lists.types";
 
 export const ServerCategory = list<Lists.ServerCategory.TypeInfo<Session>>({
   access: allowAll,
+  ui: {
+    listView: {
+      initialColumns: ["title", "slug"],
+    },
+  },
   fields: {
     title: text({
       isIndexed: "unique",

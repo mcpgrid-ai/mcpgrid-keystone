@@ -301,6 +301,56 @@ input ServerCategoryCreateInput {
   updatedAt: DateTime
 }
 
+type FrequentlyAskedQuestion {
+  id: ID!
+  title: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FrequentlyAskedQuestionWhereUniqueInput {
+  id: ID
+}
+
+input FrequentlyAskedQuestionWhereInput {
+  AND: [FrequentlyAskedQuestionWhereInput!]
+  OR: [FrequentlyAskedQuestionWhereInput!]
+  NOT: [FrequentlyAskedQuestionWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input FrequentlyAskedQuestionOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input FrequentlyAskedQuestionUpdateInput {
+  title: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FrequentlyAskedQuestionUpdateArgs {
+  where: FrequentlyAskedQuestionWhereUniqueInput!
+  data: FrequentlyAskedQuestionUpdateInput!
+}
+
+input FrequentlyAskedQuestionCreateInput {
+  title: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type Log {
   id: ID!
   title: String
@@ -436,6 +486,12 @@ type Mutation {
   updateServerCategories(data: [ServerCategoryUpdateArgs!]!): [ServerCategory]
   deleteServerCategory(where: ServerCategoryWhereUniqueInput!): ServerCategory
   deleteServerCategories(where: [ServerCategoryWhereUniqueInput!]!): [ServerCategory]
+  createFrequentlyAskedQuestion(data: FrequentlyAskedQuestionCreateInput!): FrequentlyAskedQuestion
+  createFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionCreateInput!]!): [FrequentlyAskedQuestion]
+  updateFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!, data: FrequentlyAskedQuestionUpdateInput!): FrequentlyAskedQuestion
+  updateFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionUpdateArgs!]!): [FrequentlyAskedQuestion]
+  deleteFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
+  deleteFrequentlyAskedQuestions(where: [FrequentlyAskedQuestionWhereUniqueInput!]!): [FrequentlyAskedQuestion]
   createLog(data: LogCreateInput!): Log
   createLogs(data: [LogCreateInput!]!): [Log]
   updateLog(where: LogWhereUniqueInput!, data: LogUpdateInput!): Log
@@ -477,6 +533,9 @@ type Query {
   serverCategory(where: ServerCategoryWhereUniqueInput!): ServerCategory
   serverCategories(where: ServerCategoryWhereInput! = {}, orderBy: [ServerCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServerCategoryWhereUniqueInput): [ServerCategory!]
   serverCategoriesCount(where: ServerCategoryWhereInput! = {}): Int
+  frequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
+  frequentlyAskedQuestions(where: FrequentlyAskedQuestionWhereInput! = {}, orderBy: [FrequentlyAskedQuestionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FrequentlyAskedQuestionWhereUniqueInput): [FrequentlyAskedQuestion!]
+  frequentlyAskedQuestionsCount(where: FrequentlyAskedQuestionWhereInput! = {}): Int
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput! = {}, orderBy: [LogOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LogWhereUniqueInput): [Log!]
   logsCount(where: LogWhereInput! = {}): Int

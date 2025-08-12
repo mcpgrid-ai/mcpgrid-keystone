@@ -1,1 +1,0 @@
-export { PlaceOfEvent } from "./PlaceOfEvent";
