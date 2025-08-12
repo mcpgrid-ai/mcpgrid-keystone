@@ -46,6 +46,14 @@ model ServerCategory {
   from_Server_category Server[]  @relation("Server_category")
 }
 
+model FrequentlyAskedQuestion {
+  id          String    @id @default(cuid())
+  title       String    @default("")
+  description String    @default("")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now())
+}
+
 model Log {
   id        String       @id @default(cuid())
   title     String       @default("")
