@@ -54,6 +54,16 @@ model FrequentlyAskedQuestion {
   updatedAt   DateTime? @default(now())
 }
 
+model Page {
+  id          String    @id @default(cuid())
+  title       String    @default("")
+  slug        String    @unique @default("")
+  subtitle    String    @default("")
+  description String    @default("")
+  createdAt   DateTime? @default(now())
+  updatedAt   DateTime? @default(now())
+}
+
 model Log {
   id        String       @id @default(cuid())
   title     String       @default("")

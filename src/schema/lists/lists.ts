@@ -3,11 +3,13 @@ import { Server } from "./Server";
 import { ServerCategory } from "./ServerCategory";
 import { Log } from "./Log";
 import { FrequentlyAskedQuestion } from "./FrequentlyAskedQuestion";
+import { Page } from "./Page";
 
 export const lists = {
   Server,
   ServerCategory,
   FrequentlyAskedQuestion,
+  Page,
   Log,
   User,
 };

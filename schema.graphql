@@ -351,6 +351,67 @@ input FrequentlyAskedQuestionCreateInput {
   updatedAt: DateTime
 }
 
+type Page {
+  id: ID!
+  title: String
+  slug: String
+  subtitle: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input PageWhereUniqueInput {
+  id: ID
+  slug: String
+}
+
+input PageWhereInput {
+  AND: [PageWhereInput!]
+  OR: [PageWhereInput!]
+  NOT: [PageWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  slug: StringFilter
+  subtitle: StringFilter
+  description: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input PageOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  slug: OrderDirection
+  subtitle: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input PageUpdateInput {
+  title: String
+  slug: String
+  subtitle: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input PageUpdateArgs {
+  where: PageWhereUniqueInput!
+  data: PageUpdateInput!
+}
+
+input PageCreateInput {
+  title: String
+  slug: String
+  subtitle: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
 type Log {
   id: ID!
   title: String
@@ -492,6 +553,12 @@ type Mutation {
   updateFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionUpdateArgs!]!): [FrequentlyAskedQuestion]
   deleteFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
   deleteFrequentlyAskedQuestions(where: [FrequentlyAskedQuestionWhereUniqueInput!]!): [FrequentlyAskedQuestion]
+  createPage(data: PageCreateInput!): Page
+  createPages(data: [PageCreateInput!]!): [Page]
+  updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
+  updatePages(data: [PageUpdateArgs!]!): [Page]
+  deletePage(where: PageWhereUniqueInput!): Page
+  deletePages(where: [PageWhereUniqueInput!]!): [Page]
   createLog(data: LogCreateInput!): Log
   createLogs(data: [LogCreateInput!]!): [Log]
   updateLog(where: LogWhereUniqueInput!, data: LogUpdateInput!): Log
@@ -536,6 +603,9 @@ type Query {
   frequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
   frequentlyAskedQuestions(where: FrequentlyAskedQuestionWhereInput! = {}, orderBy: [FrequentlyAskedQuestionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FrequentlyAskedQuestionWhereUniqueInput): [FrequentlyAskedQuestion!]
   frequentlyAskedQuestionsCount(where: FrequentlyAskedQuestionWhereInput! = {}): Int
+  page(where: PageWhereUniqueInput!): Page
+  pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
+  pagesCount(where: PageWhereInput! = {}): Int
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput! = {}, orderBy: [LogOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LogWhereUniqueInput): [Log!]
   logsCount(where: LogWhereInput! = {}): Int
