@@ -34,9 +34,6 @@ export const Page = list<Lists.Server.TypeInfo<Session>>({
       ui: {
         displayMode: "textarea",
       },
-      validation: {
-        isRequired: true,
-      },
     }),
     createdAt: timestamp({
       ui: {

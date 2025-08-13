@@ -1,4 +1,10 @@
-export const PAGES = [
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Lists } from ".keystone/types";
+import { Session } from "../schema/lists/lists.types";
+
+type PageCreateInput = Lists.Page.TypeInfo<Session>["inputs"]["create"];
+
+export const PAGES: PageCreateInput[] = [
   {
     title: "Home",
     slug: "home",
@@ -12,5 +18,16 @@ export const PAGES = [
     subtitle: "Your Guide to MCP Servers — Secure, Real-Time AI Connections",
     description:
       "Discover how MCP Servers let AI assistants securely access external data and tools. This FAQ covers everything from architecture and features to deployment and security best practices.",
+  },
+  {
+    title: "Dashboard",
+    slug: "dashboard",
+    subtitle: "The Wait Is Almost Over!",
+    description:
+      "Something game-changing is on the horizon. We’re counting down the seconds until launch — and you won’t want to miss it. Get ready for the drop.",
+  },
+  {
+    title: "Servers",
+    slug: "servers",
   },
 ];
