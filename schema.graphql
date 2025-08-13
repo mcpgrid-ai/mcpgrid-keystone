@@ -412,6 +412,41 @@ input PageCreateInput {
   updatedAt: DateTime
 }
 
+type Config {
+  id: ID!
+  releaseDate: DateTime
+}
+
+input ConfigWhereUniqueInput {
+  id: ID
+}
+
+input ConfigWhereInput {
+  AND: [ConfigWhereInput!]
+  OR: [ConfigWhereInput!]
+  NOT: [ConfigWhereInput!]
+  id: IDFilter
+  releaseDate: DateTimeNullableFilter
+}
+
+input ConfigOrderByInput {
+  id: OrderDirection
+  releaseDate: OrderDirection
+}
+
+input ConfigUpdateInput {
+  releaseDate: DateTime
+}
+
+input ConfigUpdateArgs {
+  where: ConfigWhereUniqueInput! = {id: 1}
+  data: ConfigUpdateInput!
+}
+
+input ConfigCreateInput {
+  releaseDate: DateTime
+}
+
 type Log {
   id: ID!
   title: String
@@ -559,6 +594,12 @@ type Mutation {
   updatePages(data: [PageUpdateArgs!]!): [Page]
   deletePage(where: PageWhereUniqueInput!): Page
   deletePages(where: [PageWhereUniqueInput!]!): [Page]
+  createConfig(data: ConfigCreateInput!): Config
+  createConfigs(data: [ConfigCreateInput!]!): [Config]
+  updateConfig(where: ConfigWhereUniqueInput! = {id: 1}, data: ConfigUpdateInput!): Config
+  updateConfigs(data: [ConfigUpdateArgs!]!): [Config]
+  deleteConfig(where: ConfigWhereUniqueInput! = {id: 1}): Config
+  deleteConfigs(where: [ConfigWhereUniqueInput!]!): [Config]
   createLog(data: LogCreateInput!): Log
   createLogs(data: [LogCreateInput!]!): [Log]
   updateLog(where: LogWhereUniqueInput!, data: LogUpdateInput!): Log
@@ -606,6 +647,9 @@ type Query {
   page(where: PageWhereUniqueInput!): Page
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   pagesCount(where: PageWhereInput! = {}): Int
+  config(where: ConfigWhereUniqueInput! = {id: 1}): Config
+  configs(where: ConfigWhereInput! = {id: {equals: 1}}, orderBy: [ConfigOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ConfigWhereUniqueInput): [Config!]
+  configsCount(where: ConfigWhereInput! = {id: {equals: 1}}): Int
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput! = {}, orderBy: [LogOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LogWhereUniqueInput): [Log!]
   logsCount(where: LogWhereInput! = {}): Int

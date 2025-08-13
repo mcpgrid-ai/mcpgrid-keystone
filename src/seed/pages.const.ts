@@ -13,4 +13,13 @@ export const PAGES = [
     description:
       "Discover how MCP Servers let AI assistants securely access external data and tools. This FAQ covers everything from architecture and features to deployment and security best practices.",
   },
+  {
+    title: "Dashboard",
+    slug: "dashboard",
+    subtitle: "The Wait Is Almost Over!",
+    description:
+      "Something game-changing is on the horizon. We’re counting down the seconds until launch — and you won’t want to miss it. Get ready for the drop.",
+  },
 ];
+
+export const PAGES_SLUGS = PAGES.map(({ slug }) => slug);
