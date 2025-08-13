@@ -1,4 +1,10 @@
-export const PAGES = [
+// eslint-disable-next-line import/no-extraneous-dependencies
+import { Lists } from ".keystone/types";
+import { Session } from "../schema/lists/lists.types";
+
+type PageCreateInput = Lists.Page.TypeInfo<Session>["inputs"]["create"];
+
+export const PAGES: PageCreateInput[] = [
   {
     title: "Home",
     slug: "home",
@@ -20,6 +26,8 @@ export const PAGES = [
     description:
       "Something game-changing is on the horizon. We’re counting down the seconds until launch — and you won’t want to miss it. Get ready for the drop.",
   },
+  {
+    title: "Servers",
+    slug: "servers",
+  },
 ];
-
-export const PAGES_SLUGS = PAGES.map(({ slug }) => slug);
