@@ -12,7 +12,7 @@ export const create: ListHooks<Lists.Server.TypeInfo> = {
           where: { id: item.categoryId },
         });
 
-        const { status: addDocumentsStatus } = await meilisearch
+        const { status: addDocumentsStatus } = await meilisearch()
           .index("server")
           .addDocuments([{ ...item, category }], {
             primaryKey: "id",

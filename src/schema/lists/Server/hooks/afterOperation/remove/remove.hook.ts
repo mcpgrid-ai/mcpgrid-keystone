@@ -8,7 +8,7 @@ export const remove: ListHooks<Lists.Server.TypeInfo> = {
   afterOperation: {
     delete: async ({ originalItem }) => {
       try {
-        const { status } = await meilisearch
+        const { status } = await meilisearch()
           .index("server")
           .deleteDocument(originalItem.id);
 

@@ -5,7 +5,7 @@
   "scripts": {
     "dev": "env-cmd keystone dev",
     "start": "keystone start --with-migrations",
-    "build": "env-cmd keystone build",
+    "build": "keystone build",
     "docker": "docker-compose up -d",
     "migrate": "env-cmd keystone prisma migrate dev --create-only",
     "lint": "eslint src --max-warnings=0 --fix",
