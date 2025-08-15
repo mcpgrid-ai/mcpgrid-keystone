@@ -8,6 +8,8 @@ declare global {
       DATABASE_URL: string;
       NODE_ENV: "development" | "production";
       SESSION_SECRET: string;
+      MEILISEARCH_HOST: string;
+      MEILISEARCH_API_KEY: string;
     }
   }
 }

@@ -11,8 +11,10 @@ import {
 import { allowAll } from "@keystone-6/core/access";
 import { cloudinaryImage } from "@keystone-6/cloudinary";
 import { Session } from "../lists.types";
+import { hooks } from "./hooks";
 
 export const Server = list<Lists.Server.TypeInfo<Session>>({
+  hooks,
   access: allowAll,
   fields: {
     title: text({
