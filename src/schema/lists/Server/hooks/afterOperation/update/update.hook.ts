@@ -4,9 +4,9 @@ import { ListHooks } from "@keystone-6/core/types";
 import { meilisearch } from "../../../../../../meilisearch";
 import { logger } from "../../../../../../logger";
 
-export const create: ListHooks<Lists.Server.TypeInfo> = {
+export const update: ListHooks<Lists.Server.TypeInfo> = {
   afterOperation: {
-    create: async ({ item, context }) => {
+    update: async ({ item, context }) => {
       try {
         const category = await context.db.ServerCategory.findOne({
           where: { id: item.categoryId },
@@ -14,12 +14,12 @@ export const create: ListHooks<Lists.Server.TypeInfo> = {
 
         const { status: addDocumentsStatus } = await meilisearch
           .index("server")
-          .addDocuments([{ ...item, category }], {
+          .updateDocuments([{ ...item, category }], {
             primaryKey: "id",
           });
 
         logger.info(
-          `Meiliearch index server create ${item.title} status ${addDocumentsStatus}`
+          `Meiliearch index server update ${item.title} status ${addDocumentsStatus}`
         );
       } catch (error) {
         logger.error(error);
