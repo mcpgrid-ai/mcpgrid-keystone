@@ -357,6 +357,10 @@ type Page {
   slug: String
   subtitle: String
   description: String
+  seoTitle: String
+  seoDescription: String
+  seoKeywords: String
+  seoIcon: CloudinaryImage_File
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -375,6 +379,9 @@ input PageWhereInput {
   slug: StringFilter
   subtitle: StringFilter
   description: StringFilter
+  seoTitle: StringFilter
+  seoDescription: StringFilter
+  seoKeywords: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -385,6 +392,9 @@ input PageOrderByInput {
   slug: OrderDirection
   subtitle: OrderDirection
   description: OrderDirection
+  seoTitle: OrderDirection
+  seoDescription: OrderDirection
+  seoKeywords: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -394,6 +404,10 @@ input PageUpdateInput {
   slug: String
   subtitle: String
   description: String
+  seoTitle: String
+  seoDescription: String
+  seoKeywords: String
+  seoIcon: Upload
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -408,6 +422,10 @@ input PageCreateInput {
   slug: String
   subtitle: String
   description: String
+  seoTitle: String
+  seoDescription: String
+  seoKeywords: String
+  seoIcon: Upload
   createdAt: DateTime
   updatedAt: DateTime
 }

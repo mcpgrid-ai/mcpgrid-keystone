@@ -55,13 +55,17 @@ model FrequentlyAskedQuestion {
 }
 
 model Page {
-  id          String    @id @default(cuid())
-  title       String    @default("")
-  slug        String    @unique @default("")
-  subtitle    String    @default("")
-  description String    @default("")
-  createdAt   DateTime? @default(now())
-  updatedAt   DateTime? @default(now())
+  id             String    @id @default(cuid())
+  title          String    @default("")
+  slug           String    @unique @default("")
+  subtitle       String    @default("")
+  description    String    @default("")
+  seoTitle       String    @default("")
+  seoDescription String    @default("")
+  seoKeywords    String    @default("")
+  seoIcon        Json?
+  createdAt      DateTime? @default(now())
+  updatedAt      DateTime? @default(now())
 }
 
 model Config {
