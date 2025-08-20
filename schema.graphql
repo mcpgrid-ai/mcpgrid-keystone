@@ -18,6 +18,7 @@ type Server {
   githubPublishedAt: DateTime
   tools: JSON
   settings: JSON
+  keywords: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -95,6 +96,7 @@ input ServerWhereInput {
   githubLicense: StringFilter
   githubLanguage: StringFilter
   githubPublishedAt: DateTimeNullableFilter
+  keywords: StringFilter
   createdAt: DateTimeNullableFilter
   updatedAt: DateTimeNullableFilter
 }
@@ -173,6 +175,7 @@ input ServerOrderByInput {
   githubLicense: OrderDirection
   githubLanguage: OrderDirection
   githubPublishedAt: OrderDirection
+  keywords: OrderDirection
   createdAt: OrderDirection
   updatedAt: OrderDirection
 }
@@ -198,6 +201,7 @@ input ServerUpdateInput {
   githubPublishedAt: DateTime
   tools: JSON
   settings: JSON
+  keywords: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -232,6 +236,7 @@ input ServerCreateInput {
   githubPublishedAt: DateTime
   tools: JSON
   settings: JSON
+  keywords: String
   createdAt: DateTime
   updatedAt: DateTime
 }

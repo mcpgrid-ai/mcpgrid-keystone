@@ -29,6 +29,7 @@ model Server {
   githubPublishedAt DateTime?       @default(now())
   tools             Json?           @default("{}")
   settings          Json?           @default("{}")
+  keywords          String          @default("")
   createdAt         DateTime?       @default(now())
   updatedAt         DateTime?       @default(now())
 

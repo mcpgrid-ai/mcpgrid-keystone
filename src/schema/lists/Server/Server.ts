@@ -101,6 +101,12 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
     settings: json({
       defaultValue: {},
     }),
+    keywords: text({
+      defaultValue: "",
+      ui: {
+        displayMode: "textarea",
+      },
+    }),
     createdAt: timestamp({
       ui: {
         createView: {
