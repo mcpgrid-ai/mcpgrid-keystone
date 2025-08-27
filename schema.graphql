@@ -473,6 +473,7 @@ input ConfigCreateInput {
 type Waitlist {
   id: ID!
   email: String
+  createdAt: DateTime
 }
 
 input WaitlistWhereUniqueInput {
@@ -486,15 +487,18 @@ input WaitlistWhereInput {
   NOT: [WaitlistWhereInput!]
   id: IDFilter
   email: StringFilter
+  createdAt: DateTimeNullableFilter
 }
 
 input WaitlistOrderByInput {
   id: OrderDirection
   email: OrderDirection
+  createdAt: OrderDirection
 }
 
 input WaitlistUpdateInput {
   email: String
+  createdAt: DateTime
 }
 
 input WaitlistUpdateArgs {
@@ -504,6 +508,7 @@ input WaitlistUpdateArgs {
 
 input WaitlistCreateInput {
   email: String
+  createdAt: DateTime
 }
 
 type Log {

@@ -75,8 +75,9 @@ model Config {
 }
 
 model Waitlist {
-  id    String @id @default(cuid())
-  email String @unique @default("")
+  id        String    @id @default(cuid())
+  email     String    @unique @default("")
+  createdAt DateTime? @default(now())
 }
 
 model Log {
