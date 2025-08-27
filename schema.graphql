@@ -470,6 +470,42 @@ input ConfigCreateInput {
   releaseDate: DateTime
 }
 
+type Waitlist {
+  id: ID!
+  email: String
+}
+
+input WaitlistWhereUniqueInput {
+  id: ID
+  email: String
+}
+
+input WaitlistWhereInput {
+  AND: [WaitlistWhereInput!]
+  OR: [WaitlistWhereInput!]
+  NOT: [WaitlistWhereInput!]
+  id: IDFilter
+  email: StringFilter
+}
+
+input WaitlistOrderByInput {
+  id: OrderDirection
+  email: OrderDirection
+}
+
+input WaitlistUpdateInput {
+  email: String
+}
+
+input WaitlistUpdateArgs {
+  where: WaitlistWhereUniqueInput!
+  data: WaitlistUpdateInput!
+}
+
+input WaitlistCreateInput {
+  email: String
+}
+
 type Log {
   id: ID!
   title: String
@@ -623,6 +659,12 @@ type Mutation {
   updateConfigs(data: [ConfigUpdateArgs!]!): [Config]
   deleteConfig(where: ConfigWhereUniqueInput! = {id: 1}): Config
   deleteConfigs(where: [ConfigWhereUniqueInput!]!): [Config]
+  createWaitlist(data: WaitlistCreateInput!): Waitlist
+  createWaitlists(data: [WaitlistCreateInput!]!): [Waitlist]
+  updateWaitlist(where: WaitlistWhereUniqueInput!, data: WaitlistUpdateInput!): Waitlist
+  updateWaitlists(data: [WaitlistUpdateArgs!]!): [Waitlist]
+  deleteWaitlist(where: WaitlistWhereUniqueInput!): Waitlist
+  deleteWaitlists(where: [WaitlistWhereUniqueInput!]!): [Waitlist]
   createLog(data: LogCreateInput!): Log
   createLogs(data: [LogCreateInput!]!): [Log]
   updateLog(where: LogWhereUniqueInput!, data: LogUpdateInput!): Log
@@ -673,6 +715,9 @@ type Query {
   config(where: ConfigWhereUniqueInput! = {id: 1}): Config
   configs(where: ConfigWhereInput! = {id: {equals: 1}}, orderBy: [ConfigOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ConfigWhereUniqueInput): [Config!]
   configsCount(where: ConfigWhereInput! = {id: {equals: 1}}): Int
+  waitlist(where: WaitlistWhereUniqueInput!): Waitlist
+  waitlists(where: WaitlistWhereInput! = {}, orderBy: [WaitlistOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: WaitlistWhereUniqueInput): [Waitlist!]
+  waitlistsCount(where: WaitlistWhereInput! = {}): Int
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput! = {}, orderBy: [LogOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LogWhereUniqueInput): [Log!]
   logsCount(where: LogWhereInput! = {}): Int

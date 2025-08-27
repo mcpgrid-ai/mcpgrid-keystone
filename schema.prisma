@@ -74,6 +74,11 @@ model Config {
   releaseDate DateTime? @default(now())
 }
 
+model Waitlist {
+  id    String @id @default(cuid())
+  email String @unique @default("")
+}
+
 model Log {
   id        String       @id @default(cuid())
   title     String       @default("")

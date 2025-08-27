@@ -5,6 +5,7 @@ import { Log } from "./Log";
 import { FrequentlyAskedQuestion } from "./FrequentlyAskedQuestion";
 import { Page } from "./Page";
 import { Config } from "./Config";
+import { Waitlist } from "./Waitlist";
 
 export const lists = {
   Server,
@@ -12,6 +13,7 @@ export const lists = {
   FrequentlyAskedQuestion,
   Page,
   Config,
+  Waitlist,
   Log,
   User,
 };
