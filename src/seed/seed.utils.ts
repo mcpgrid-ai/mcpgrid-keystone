@@ -3,6 +3,7 @@ import { SERVER_CATEGORIES } from "./serverCategories.const";
 import { FREQUENTLY_ASKED_QUESTIONS } from "./frequentlyAskedQuestions.const";
 import { PAGES } from "./pages.const";
 import { CONFIG } from "./config.const";
+import { TESTIMONIALS } from "./testimonials.const";
 
 export const seed = async (context: Context) => {
   const categoriesRequest = context.db.ServerCategory.findMany({
@@ -14,21 +15,27 @@ export const seed = async (context: Context) => {
   const pagesRequest = context.db.Page.findMany({
     take: 100,
   });
+  const testimonialsRequest = context.db.Testimonial.findMany({
+    take: 100,
+  });
   const configRequest = context.db.Config.findOne({
     where: {
       id: "1",
     },
   });
 
-  const [categories, faqs, pages, config] = await Promise.all([
+  const [categories, faqs, pages, config, testimonials] = await Promise.all([
     categoriesRequest,
     faqsRequest,
     pagesRequest,
     configRequest,
+    testimonialsRequest,
   ]);
 
   const pagesSlugs = pages.map(({ slug }) => slug);
-  const pagesToCreate = PAGES.filter(({ slug }) => !pagesSlugs.includes(slug));
+  const pagesToCreate = PAGES.filter(
+    ({ slug }) => !pagesSlugs.includes(`${slug}`)
+  );
 
   if (categories.length === 0) {
     await context.db.ServerCategory.createMany({
@@ -51,6 +58,12 @@ export const seed = async (context: Context) => {
   if (!config) {
     await context.db.Config.createOne({
       data: CONFIG,
+    });
+  }
+
+  if (testimonials.length === 0) {
+    await context.db.Testimonial.createMany({
+      data: TESTIMONIALS,
     });
   }
 };

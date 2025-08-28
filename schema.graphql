@@ -306,56 +306,6 @@ input ServerCategoryCreateInput {
   updatedAt: DateTime
 }
 
-type FrequentlyAskedQuestion {
-  id: ID!
-  title: String
-  description: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input FrequentlyAskedQuestionWhereUniqueInput {
-  id: ID
-}
-
-input FrequentlyAskedQuestionWhereInput {
-  AND: [FrequentlyAskedQuestionWhereInput!]
-  OR: [FrequentlyAskedQuestionWhereInput!]
-  NOT: [FrequentlyAskedQuestionWhereInput!]
-  id: IDFilter
-  title: StringFilter
-  description: StringFilter
-  createdAt: DateTimeNullableFilter
-  updatedAt: DateTimeNullableFilter
-}
-
-input FrequentlyAskedQuestionOrderByInput {
-  id: OrderDirection
-  title: OrderDirection
-  description: OrderDirection
-  createdAt: OrderDirection
-  updatedAt: OrderDirection
-}
-
-input FrequentlyAskedQuestionUpdateInput {
-  title: String
-  description: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
-input FrequentlyAskedQuestionUpdateArgs {
-  where: FrequentlyAskedQuestionWhereUniqueInput!
-  data: FrequentlyAskedQuestionUpdateInput!
-}
-
-input FrequentlyAskedQuestionCreateInput {
-  title: String
-  description: String
-  createdAt: DateTime
-  updatedAt: DateTime
-}
-
 type Page {
   id: ID!
   title: String
@@ -431,6 +381,109 @@ input PageCreateInput {
   seoDescription: String
   seoKeywords: String
   seoIcon: Upload
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+type Testimonial {
+  id: ID!
+  fullName: String
+  title: String
+  avatar: CloudinaryImage_File
+  feedback: String
+  createdAt: DateTime
+}
+
+input TestimonialWhereUniqueInput {
+  id: ID
+}
+
+input TestimonialWhereInput {
+  AND: [TestimonialWhereInput!]
+  OR: [TestimonialWhereInput!]
+  NOT: [TestimonialWhereInput!]
+  id: IDFilter
+  fullName: StringFilter
+  title: StringFilter
+  feedback: StringFilter
+  createdAt: DateTimeNullableFilter
+}
+
+input TestimonialOrderByInput {
+  id: OrderDirection
+  fullName: OrderDirection
+  title: OrderDirection
+  feedback: OrderDirection
+  createdAt: OrderDirection
+}
+
+input TestimonialUpdateInput {
+  fullName: String
+  title: String
+  avatar: Upload
+  feedback: String
+  createdAt: DateTime
+}
+
+input TestimonialUpdateArgs {
+  where: TestimonialWhereUniqueInput!
+  data: TestimonialUpdateInput!
+}
+
+input TestimonialCreateInput {
+  fullName: String
+  title: String
+  avatar: Upload
+  feedback: String
+  createdAt: DateTime
+}
+
+type FrequentlyAskedQuestion {
+  id: ID!
+  title: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FrequentlyAskedQuestionWhereUniqueInput {
+  id: ID
+}
+
+input FrequentlyAskedQuestionWhereInput {
+  AND: [FrequentlyAskedQuestionWhereInput!]
+  OR: [FrequentlyAskedQuestionWhereInput!]
+  NOT: [FrequentlyAskedQuestionWhereInput!]
+  id: IDFilter
+  title: StringFilter
+  description: StringFilter
+  createdAt: DateTimeNullableFilter
+  updatedAt: DateTimeNullableFilter
+}
+
+input FrequentlyAskedQuestionOrderByInput {
+  id: OrderDirection
+  title: OrderDirection
+  description: OrderDirection
+  createdAt: OrderDirection
+  updatedAt: OrderDirection
+}
+
+input FrequentlyAskedQuestionUpdateInput {
+  title: String
+  description: String
+  createdAt: DateTime
+  updatedAt: DateTime
+}
+
+input FrequentlyAskedQuestionUpdateArgs {
+  where: FrequentlyAskedQuestionWhereUniqueInput!
+  data: FrequentlyAskedQuestionUpdateInput!
+}
+
+input FrequentlyAskedQuestionCreateInput {
+  title: String
+  description: String
   createdAt: DateTime
   updatedAt: DateTime
 }
@@ -646,18 +699,24 @@ type Mutation {
   updateServerCategories(data: [ServerCategoryUpdateArgs!]!): [ServerCategory]
   deleteServerCategory(where: ServerCategoryWhereUniqueInput!): ServerCategory
   deleteServerCategories(where: [ServerCategoryWhereUniqueInput!]!): [ServerCategory]
-  createFrequentlyAskedQuestion(data: FrequentlyAskedQuestionCreateInput!): FrequentlyAskedQuestion
-  createFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionCreateInput!]!): [FrequentlyAskedQuestion]
-  updateFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!, data: FrequentlyAskedQuestionUpdateInput!): FrequentlyAskedQuestion
-  updateFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionUpdateArgs!]!): [FrequentlyAskedQuestion]
-  deleteFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
-  deleteFrequentlyAskedQuestions(where: [FrequentlyAskedQuestionWhereUniqueInput!]!): [FrequentlyAskedQuestion]
   createPage(data: PageCreateInput!): Page
   createPages(data: [PageCreateInput!]!): [Page]
   updatePage(where: PageWhereUniqueInput!, data: PageUpdateInput!): Page
   updatePages(data: [PageUpdateArgs!]!): [Page]
   deletePage(where: PageWhereUniqueInput!): Page
   deletePages(where: [PageWhereUniqueInput!]!): [Page]
+  createTestimonial(data: TestimonialCreateInput!): Testimonial
+  createTestimonials(data: [TestimonialCreateInput!]!): [Testimonial]
+  updateTestimonial(where: TestimonialWhereUniqueInput!, data: TestimonialUpdateInput!): Testimonial
+  updateTestimonials(data: [TestimonialUpdateArgs!]!): [Testimonial]
+  deleteTestimonial(where: TestimonialWhereUniqueInput!): Testimonial
+  deleteTestimonials(where: [TestimonialWhereUniqueInput!]!): [Testimonial]
+  createFrequentlyAskedQuestion(data: FrequentlyAskedQuestionCreateInput!): FrequentlyAskedQuestion
+  createFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionCreateInput!]!): [FrequentlyAskedQuestion]
+  updateFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!, data: FrequentlyAskedQuestionUpdateInput!): FrequentlyAskedQuestion
+  updateFrequentlyAskedQuestions(data: [FrequentlyAskedQuestionUpdateArgs!]!): [FrequentlyAskedQuestion]
+  deleteFrequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
+  deleteFrequentlyAskedQuestions(where: [FrequentlyAskedQuestionWhereUniqueInput!]!): [FrequentlyAskedQuestion]
   createConfig(data: ConfigCreateInput!): Config
   createConfigs(data: [ConfigCreateInput!]!): [Config]
   updateConfig(where: ConfigWhereUniqueInput! = {id: 1}, data: ConfigUpdateInput!): Config
@@ -711,12 +770,15 @@ type Query {
   serverCategory(where: ServerCategoryWhereUniqueInput!): ServerCategory
   serverCategories(where: ServerCategoryWhereInput! = {}, orderBy: [ServerCategoryOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ServerCategoryWhereUniqueInput): [ServerCategory!]
   serverCategoriesCount(where: ServerCategoryWhereInput! = {}): Int
-  frequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
-  frequentlyAskedQuestions(where: FrequentlyAskedQuestionWhereInput! = {}, orderBy: [FrequentlyAskedQuestionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FrequentlyAskedQuestionWhereUniqueInput): [FrequentlyAskedQuestion!]
-  frequentlyAskedQuestionsCount(where: FrequentlyAskedQuestionWhereInput! = {}): Int
   page(where: PageWhereUniqueInput!): Page
   pages(where: PageWhereInput! = {}, orderBy: [PageOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: PageWhereUniqueInput): [Page!]
   pagesCount(where: PageWhereInput! = {}): Int
+  testimonial(where: TestimonialWhereUniqueInput!): Testimonial
+  testimonials(where: TestimonialWhereInput! = {}, orderBy: [TestimonialOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: TestimonialWhereUniqueInput): [Testimonial!]
+  testimonialsCount(where: TestimonialWhereInput! = {}): Int
+  frequentlyAskedQuestion(where: FrequentlyAskedQuestionWhereUniqueInput!): FrequentlyAskedQuestion
+  frequentlyAskedQuestions(where: FrequentlyAskedQuestionWhereInput! = {}, orderBy: [FrequentlyAskedQuestionOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: FrequentlyAskedQuestionWhereUniqueInput): [FrequentlyAskedQuestion!]
+  frequentlyAskedQuestionsCount(where: FrequentlyAskedQuestionWhereInput! = {}): Int
   config(where: ConfigWhereUniqueInput! = {id: 1}): Config
   configs(where: ConfigWhereInput! = {id: {equals: 1}}, orderBy: [ConfigOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: ConfigWhereUniqueInput): [Config!]
   configsCount(where: ConfigWhereInput! = {id: {equals: 1}}): Int
