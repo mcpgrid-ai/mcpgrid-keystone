@@ -8,9 +8,6 @@ on:
 env:
   GCP_SQL_CONNECTION_NAME: mcp-box:us-central1:mcp-box
   GCP_CLOUD_RUN_SERVICE_NAME: mcpbox-keystone
-  GCP_GAR_LOCATION: us-central1
-  GCP_PROJECT_ID: mcp-box
-  GCP_REGION: us-central1
   CLOUDINARY_FOLDER_ROOT: mcpbox
   DOCKER_IMAGE: ''
 
@@ -29,7 +26,7 @@ jobs:
 
       - name: Setup environment variables
         run: |
-          echo "DOCKER_IMAGE=${{ env.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ env.GCP_PROJECT_ID }}/${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}" >> $GITHUB_ENV
+          echo "DOCKER_IMAGE=${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev/${{ secrets.GCP_PROJECT_ID }}/${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}/${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}:${{ github.sha }}" >> $GITHUB_ENV
 
       - name: Confirm environment variables
         run: |
@@ -44,7 +41,7 @@ jobs:
       - name: Docker Auth
         uses: docker/login-action@v3
         with:
-          registry: ${{ env.GCP_GAR_LOCATION }}-docker.pkg.dev
+          registry: ${{ vars.GCP_GAR_LOCATION }}-docker.pkg.dev
           username: _json_key
           password: ${{ secrets.GCP_SERVICE_ACCOUNT_KEY }}
 
@@ -58,7 +55,7 @@ jobs:
         uses: google-github-actions/deploy-cloudrun@v2
         with:
           service: ${{ env.GCP_CLOUD_RUN_SERVICE_NAME }}
-          region: ${{ env.GCP_REGION }}
+          region: ${{ vars.GCP_REGION }}
           image: ${{ env.DOCKER_IMAGE }}
           flags: |
             --port=8080
@@ -75,6 +72,7 @@ jobs:
             CLOUDINARY_CLOUD_NAME=CLOUDINARY_CLOUD_NAME:latest
           env_vars: |
             CLOUDINARY_FOLDER_ROOT=${{ env.CLOUDINARY_FOLDER_ROOT }}
+            CORS_ORIGINS=${{ vars.WEB_HOST }}
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
