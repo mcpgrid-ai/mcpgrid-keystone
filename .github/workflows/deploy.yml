@@ -75,6 +75,7 @@ jobs:
             CLOUDINARY_CLOUD_NAME=CLOUDINARY_CLOUD_NAME:latest
           env_vars: |
             CLOUDINARY_FOLDER_ROOT=${{ env.CLOUDINARY_FOLDER_ROOT }}
+            CORS_ORIGINS=${{ vars.WEB_HOST }}
 
       - name: Show Output
         run: echo ${{ steps.deploy.outputs.url }}
