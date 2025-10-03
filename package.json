@@ -4,7 +4,7 @@
   "private": true,
   "scripts": {
     "dev": "env-cmd keystone dev",
-    "start": "keystone start --with-migrations",
+    "start": "prisma migrate resolve --applied 20251003171046_ && keystone start --with-migrations",
     "build": "keystone build",
     "docker": "docker-compose up -d",
     "migrate": "env-cmd keystone prisma migrate dev --create-only",
