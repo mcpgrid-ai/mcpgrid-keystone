@@ -23,12 +23,11 @@ export const Admin = list<Lists.Admin.TypeInfo<Session>>({
           label: "Super Admin",
           value: AdminRole.SuperAdmin,
         },
-      ],
-      ui: {
-        itemView: {
-          fieldMode: "read",
+        {
+          label: "Editor",
+          value: AdminRole.Editor,
         },
-      },
+      ],
     }),
     createdAt: timestamp({
       defaultValue: { kind: "now" },

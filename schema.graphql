@@ -638,6 +638,7 @@ type PasswordState {
 
 enum AdminRoleType {
   SuperAdmin
+  Editor
 }
 
 input AdminWhereUniqueInput {

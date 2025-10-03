@@ -8,6 +8,7 @@ import { Session } from "../lists.types";
 export const FrequentlyAskedQuestion = list<Lists.Server.TypeInfo<Session>>({
   access: allowAll,
   ui: {
+    label: "FAQs",
     listView: {
       initialColumns: ["title"],
     },
