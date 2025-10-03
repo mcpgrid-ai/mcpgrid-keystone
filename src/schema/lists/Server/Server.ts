@@ -36,6 +36,7 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
     }),
     isOfficial: checkbox(),
     description: text({
+      isIndexed: true,
       ui: {
         displayMode: "textarea",
       },
