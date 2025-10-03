@@ -7,6 +7,7 @@ import { Page } from "./Page";
 import { Config } from "./Config";
 import { Waitlist } from "./Waitlist";
 import { Testimonial } from "./Testimonial";
+import { User } from "./User";
 
 export const lists = {
   Server,
@@ -17,5 +18,6 @@ export const lists = {
   Config,
   Waitlist,
   Log,
+  User,
   Admin,
 };

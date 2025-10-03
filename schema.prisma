@@ -33,6 +33,8 @@ model Server {
   createdAt         DateTime?       @default(now())
   updatedAt         DateTime?       @default(now())
 
+  @@index([title])
+  @@index([description])
   @@index([categoryId])
 }
 
@@ -95,6 +97,15 @@ model Log {
   type      LogTypeType?
   error     Json?        @default("{}")
   createdAt DateTime?    @default(now())
+}
+
+model User {
+  id         String    @id @default(cuid())
+  identityId String    @unique @default("")
+  name       String    @default("")
+  email      String    @unique @default("")
+  updatedAt  DateTime? @default(now())
+  createdAt  DateTime? @default(now())
 }
 
 model Admin {

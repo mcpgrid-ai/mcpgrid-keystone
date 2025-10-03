@@ -18,6 +18,7 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
   access: allowAll,
   fields: {
     title: text({
+      isIndexed: true,
       validation: {
         isRequired: true,
       },
@@ -35,6 +36,7 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
     }),
     isOfficial: checkbox(),
     description: text({
+      isIndexed: true,
       ui: {
         displayMode: "textarea",
       },
