@@ -623,12 +623,12 @@ input LogCreateInput {
   createdAt: DateTime
 }
 
-type User {
+type Admin {
   id: ID!
   name: String
   email: String
   password: PasswordState
-  isAdmin: Boolean
+  role: AdminRoleType
   createdAt: DateTime
 }
 
@@ -636,48 +636,59 @@ type PasswordState {
   isSet: Boolean!
 }
 
-input UserWhereUniqueInput {
+enum AdminRoleType {
+  SuperAdmin
+}
+
+input AdminWhereUniqueInput {
   id: ID
   email: String
 }
 
-input UserWhereInput {
-  AND: [UserWhereInput!]
-  OR: [UserWhereInput!]
-  NOT: [UserWhereInput!]
+input AdminWhereInput {
+  AND: [AdminWhereInput!]
+  OR: [AdminWhereInput!]
+  NOT: [AdminWhereInput!]
   id: IDFilter
   name: StringFilter
   email: StringFilter
-  isAdmin: BooleanFilter
+  role: AdminRoleTypeNullableFilter
   createdAt: DateTimeNullableFilter
 }
 
-input UserOrderByInput {
+input AdminRoleTypeNullableFilter {
+  equals: AdminRoleType
+  in: [AdminRoleType!]
+  notIn: [AdminRoleType!]
+  not: AdminRoleTypeNullableFilter
+}
+
+input AdminOrderByInput {
   id: OrderDirection
   name: OrderDirection
   email: OrderDirection
-  isAdmin: OrderDirection
+  role: OrderDirection
   createdAt: OrderDirection
 }
 
-input UserUpdateInput {
+input AdminUpdateInput {
   name: String
   email: String
   password: String
-  isAdmin: Boolean
+  role: AdminRoleType
   createdAt: DateTime
 }
 
-input UserUpdateArgs {
-  where: UserWhereUniqueInput!
-  data: UserUpdateInput!
+input AdminUpdateArgs {
+  where: AdminWhereUniqueInput!
+  data: AdminUpdateInput!
 }
 
-input UserCreateInput {
+input AdminCreateInput {
   name: String
   email: String
   password: String
-  isAdmin: Boolean
+  role: AdminRoleType
   createdAt: DateTime
 }
 
@@ -735,29 +746,29 @@ type Mutation {
   updateLogs(data: [LogUpdateArgs!]!): [Log]
   deleteLog(where: LogWhereUniqueInput!): Log
   deleteLogs(where: [LogWhereUniqueInput!]!): [Log]
-  createUser(data: UserCreateInput!): User
-  createUsers(data: [UserCreateInput!]!): [User]
-  updateUser(where: UserWhereUniqueInput!, data: UserUpdateInput!): User
-  updateUsers(data: [UserUpdateArgs!]!): [User]
-  deleteUser(where: UserWhereUniqueInput!): User
-  deleteUsers(where: [UserWhereUniqueInput!]!): [User]
+  createAdmin(data: AdminCreateInput!): Admin
+  createAdmins(data: [AdminCreateInput!]!): [Admin]
+  updateAdmin(where: AdminWhereUniqueInput!, data: AdminUpdateInput!): Admin
+  updateAdmins(data: [AdminUpdateArgs!]!): [Admin]
+  deleteAdmin(where: AdminWhereUniqueInput!): Admin
+  deleteAdmins(where: [AdminWhereUniqueInput!]!): [Admin]
   endSession: Boolean!
-  authenticateUserWithPassword(email: String!, password: String!): UserAuthenticationWithPasswordResult
-  createInitialUser(data: CreateInitialUserInput!): UserAuthenticationWithPasswordSuccess!
+  authenticateAdminWithPassword(email: String!, password: String!): AdminAuthenticationWithPasswordResult
+  createInitialAdmin(data: CreateInitialAdminInput!): AdminAuthenticationWithPasswordSuccess!
 }
 
-union UserAuthenticationWithPasswordResult = UserAuthenticationWithPasswordSuccess | UserAuthenticationWithPasswordFailure
+union AdminAuthenticationWithPasswordResult = AdminAuthenticationWithPasswordSuccess | AdminAuthenticationWithPasswordFailure
 
-type UserAuthenticationWithPasswordSuccess {
+type AdminAuthenticationWithPasswordSuccess {
   sessionToken: String!
-  item: User!
+  item: Admin!
 }
 
-type UserAuthenticationWithPasswordFailure {
+type AdminAuthenticationWithPasswordFailure {
   message: String!
 }
 
-input CreateInitialUserInput {
+input CreateInitialAdminInput {
   name: String
   email: String
   password: String
@@ -788,14 +799,14 @@ type Query {
   log(where: LogWhereUniqueInput!): Log
   logs(where: LogWhereInput! = {}, orderBy: [LogOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: LogWhereUniqueInput): [Log!]
   logsCount(where: LogWhereInput! = {}): Int
-  user(where: UserWhereUniqueInput!): User
-  users(where: UserWhereInput! = {}, orderBy: [UserOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: UserWhereUniqueInput): [User!]
-  usersCount(where: UserWhereInput! = {}): Int
+  admin(where: AdminWhereUniqueInput!): Admin
+  admins(where: AdminWhereInput! = {}, orderBy: [AdminOrderByInput!]! = [], take: Int, skip: Int! = 0, cursor: AdminWhereUniqueInput): [Admin!]
+  adminsCount(where: AdminWhereInput! = {}): Int
   keystone: KeystoneMeta!
   authenticatedItem: AuthenticatedItem
 }
 
-union AuthenticatedItem = User
+union AuthenticatedItem = Admin
 
 type KeystoneMeta {
   adminMeta: KeystoneAdminMeta!

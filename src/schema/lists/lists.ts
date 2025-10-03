@@ -1,4 +1,4 @@
-import { User } from "./User";
+import { Admin } from "./Admin";
 import { Server } from "./Server";
 import { ServerCategory } from "./ServerCategory";
 import { Log } from "./Log";
@@ -17,5 +17,5 @@ export const lists = {
   Config,
   Waitlist,
   Log,
-  User,
+  Admin,
 };
