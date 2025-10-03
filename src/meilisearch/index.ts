@@ -1,1 +1,0 @@
-export { meilisearch } from "./client";

@@ -1,17 +1,13 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Lists } from ".keystone/types";
 import { list } from "@keystone-6/core";
-import { text, password, timestamp, checkbox } from "@keystone-6/core/fields";
+import { text, password, timestamp, select } from "@keystone-6/core/fields";
 import { allowAll } from "@keystone-6/core/access";
 import { Session } from "../lists.types";
+import { AdminRole } from "./Admin.types";
 
-export const User = list<Lists.User.TypeInfo<Session>>({
+export const Admin = list<Lists.Admin.TypeInfo<Session>>({
   access: allowAll,
-  ui: {
-    isHidden: ({ session }) => {
-      return !session?.data?.isAdmin;
-    },
-  },
   fields: {
     name: text({ validation: { isRequired: true } }),
     email: text({
@@ -19,10 +15,20 @@ export const User = list<Lists.User.TypeInfo<Session>>({
       isIndexed: "unique",
     }),
     password: password({ validation: { isRequired: true } }),
-    isAdmin: checkbox({
-      defaultValue: true,
+    role: select({
+      defaultValue: AdminRole.SuperAdmin,
+      type: "enum",
+      options: [
+        {
+          label: "Super Admin",
+          value: AdminRole.SuperAdmin,
+        },
+        {
+          label: "Editor",
+          value: AdminRole.Editor,
+        },
+      ],
     }),
-
     createdAt: timestamp({
       defaultValue: { kind: "now" },
     }),

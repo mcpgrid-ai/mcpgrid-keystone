@@ -7,6 +7,9 @@ import { Session } from "../lists.types";
 
 export const Waitlist = list<Lists.Config.TypeInfo<Session>>({
   access: allowAll,
+  ui: {
+    labelField: "email",
+  },
   fields: {
     email: text({
       isIndexed: "unique",
