@@ -6,7 +6,6 @@ import { merge } from "lodash";
 export const update: ListHooks<Lists.Server.TypeInfo> = {
   resolveInput: {
     update: async ({ resolvedData }) => {
-      console.log("resolvedData", resolvedData);
       return merge({}, resolvedData, {
         updatedAt: new Date(),
       });
