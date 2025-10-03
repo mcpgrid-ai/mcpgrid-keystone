@@ -34,7 +34,6 @@ model Server {
   updatedAt         DateTime?       @default(now())
 
   @@index([title])
-  @@index([description])
   @@index([categoryId])
 }
 
