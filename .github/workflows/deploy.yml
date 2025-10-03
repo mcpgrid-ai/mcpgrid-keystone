@@ -63,8 +63,6 @@ jobs:
             --allow-unauthenticated
             --add-cloudsql-instances=${{ env.GCP_SQL_CONNECTION_NAME }}
           secrets: |
-            MEILISEARCH_API_KEY=MEILISEARCH_API_KEY:latest
-            MEILISEARCH_HOST=MEILISEARCH_HOST:latest
             DATABASE_URL=KEYSTONE_DATABASE_URL:latest
             SESSION_SECRET=KEYSTONE_SESSION_SECRET:latest
             CLOUDINARY_API_KEY=CLOUDINARY_API_KEY:latest
