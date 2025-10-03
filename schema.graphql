@@ -11,13 +11,13 @@ type Server {
   icon: CloudinaryImage_File
   category: ServerCategory
   homepage: String
+  tools: JSON
+  settings: JSON
   githubUrl: String
   githubOwner: String
   githubLicense: String
   githubLanguage: String
   githubPublishedAt: DateTime
-  tools: JSON
-  settings: JSON
   keywords: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -194,13 +194,13 @@ input ServerUpdateInput {
   icon: Upload
   category: ServerCategoryRelateToOneForUpdateInput
   homepage: String
+  tools: JSON
+  settings: JSON
   githubUrl: String
   githubOwner: String
   githubLicense: String
   githubLanguage: String
   githubPublishedAt: DateTime
-  tools: JSON
-  settings: JSON
   keywords: String
   createdAt: DateTime
   updatedAt: DateTime
@@ -229,13 +229,13 @@ input ServerCreateInput {
   icon: Upload
   category: ServerCategoryRelateToOneForCreateInput
   homepage: String
+  tools: JSON
+  settings: JSON
   githubUrl: String
   githubOwner: String
   githubLicense: String
   githubLanguage: String
   githubPublishedAt: DateTime
-  tools: JSON
-  settings: JSON
   keywords: String
   createdAt: DateTime
   updatedAt: DateTime

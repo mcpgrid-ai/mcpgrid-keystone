@@ -1,6 +1,6 @@
 // eslint-disable-next-line import/no-extraneous-dependencies
 import { Lists } from ".keystone/types";
-import { list } from "@keystone-6/core";
+import { group, list } from "@keystone-6/core";
 import {
   checkbox,
   relationship,
@@ -69,42 +69,59 @@ export const Server = list<Lists.Server.TypeInfo<Session>>({
         isRequired: true,
       },
     }),
-    githubUrl: text({
-      isIndexed: "unique",
-      validation: {
-        isRequired: true,
-      },
-    }),
-    githubOwner: text({
-      validation: {
-        isRequired: true,
-      },
-    }),
-    githubLicense: text({}),
-    githubLanguage: text({}),
-    githubPublishedAt: timestamp({
-      ui: {
-        createView: {
-          fieldMode: "hidden",
-        },
-        itemView: {
-          fieldMode: "read",
-        },
-      },
-      defaultValue: {
-        kind: "now",
-      },
-    }),
     tools: json({
       defaultValue: {},
     }),
     settings: json({
       defaultValue: {},
     }),
-    keywords: text({
-      defaultValue: "",
-      ui: {
-        displayMode: "textarea",
+    ...group({
+      label: "GitHub Information",
+      fields: {
+        githubUrl: text({
+          label: "URL",
+          isIndexed: "unique",
+          validation: {
+            isRequired: true,
+          },
+        }),
+        githubOwner: text({
+          label: "Owner",
+          validation: {
+            isRequired: true,
+          },
+        }),
+        githubLicense: text({
+          label: "License",
+        }),
+        githubLanguage: text({
+          label: "Language",
+        }),
+        githubPublishedAt: timestamp({
+          ui: {
+            createView: {
+              fieldMode: "hidden",
+            },
+            itemView: {
+              fieldMode: "read",
+            },
+          },
+          defaultValue: {
+            kind: "now",
+          },
+        }),
+      },
+    }),
+    ...group({
+      label: "SEO Information",
+      fields: {
+        keywords: text({
+          label: "Keywords",
+          defaultValue: "",
+          ui: {
+            displayMode: "textarea",
+          },
+        }),
       },
     }),
     createdAt: timestamp({
